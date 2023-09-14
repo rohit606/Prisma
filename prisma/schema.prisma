@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  // VnG6b7VdRNtclu68
+  url      = "postgresql://postgres:VnG6b7VdRNtclu68@db.dbpweldcolgewgisnofb.supabase.co:5432/postgres"
+}
+
+model Flight {
+  flight_name_id Int @id @default(autoincrement())
+  Name String
+ 
+}
+
+model Airport {
+  id Int @id @default( autoincrement())
+  Airportname String
+  Airportlocation String
+  AirportCountry String
+
+}
+
+
+
+
+
+
