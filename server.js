@@ -9,6 +9,7 @@ app.get('/flights', async (req, res) => {
   try {
     const flights = await prisma.flight.findMany()
     res.status(200).json(flights);
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -21,25 +22,13 @@ app.post('/flight',async (req, res)=> {
   
 })
 
-// app.patch('/flight/:id', async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     const updatedFlight = await prisma.flight.update({
-//       id,
-//       data: req.body
-//     });
-//     res.status(200).json(updatedFlight);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// });
-
 app.patch('/flight/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const updatedFlight = await prisma.flight.update({
-      where: { id }, // Specify the condition to identify the flight to update
+      where: {
+        flight_name_id: Number(id)
+      },
       data: req.body
     });
     res.status(200).json(updatedFlight);
@@ -50,15 +39,17 @@ app.patch('/flight/:id', async (req, res) => {
 });
 
 
+
 app.delete('/flight/:id', async (req, res) => {
-  try {
-    const id = req.params.id;
-    await prisma.flight.delete({ id });
-    res.status(204).send();
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+  const  id  = req.params;
+  const flight = await prisma.flight.delete({
+    where: {
+      flight_name_id: Number(id)
+
+    },
+  });
+
+  res.json(flight);
 });
 
 app.listen(5000);
